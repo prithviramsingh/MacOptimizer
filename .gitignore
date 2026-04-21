@@ -1,4 +1,5 @@
 .build/
+.claude/
 *.xcodeproj/
 *.xcworkspace/
 .DS_Store
