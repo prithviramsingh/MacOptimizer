@@ -1,0 +1,110 @@
+{
+  "": {
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/primary.swiftdeps"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ContentView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ContentView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ContentView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ContentView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ContentView.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/MacOptimizerApp.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/MacOptimizerApp.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/MacOptimizerApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/MacOptimizerApp.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/MacOptimizerApp.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupItem.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupItem.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupItem~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupItem.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupItem.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessInfo.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessInfo.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessInfo~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessInfo.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessInfo.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/Suggestion.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/Suggestion.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/Suggestion~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/Suggestion.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/Suggestion.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/KnowledgeBase.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/KnowledgeBase.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/KnowledgeBase~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/KnowledgeBase.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/KnowledgeBase.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessMonitor.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessMonitor.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessMonitor~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessMonitor.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessMonitor.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ShellRunner.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ShellRunner.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ShellRunner~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ShellRunner.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ShellRunner.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsService.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsService.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsService~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsService.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsService.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SystemCleaner.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SystemCleaner.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SystemCleaner~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SystemCleaner.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SystemCleaner.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/CleanupView.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/DashboardView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/DashboardView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/DashboardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/DashboardView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/DashboardView.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessesView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessesView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessesView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessesView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/ProcessesView.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/StartupItemsView.dia"
+  },
+  "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift": {
+    "dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SuggestionsView.d",
+    "object": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SuggestionsView.swift.o",
+    "swiftmodule": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SuggestionsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SuggestionsView.swiftdeps",
+    "diagnostics": "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/debug/MacOptimizer.build/SuggestionsView.dia"
+  }
+}

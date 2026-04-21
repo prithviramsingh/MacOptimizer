@@ -1,0 +1,15 @@
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift
+/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift

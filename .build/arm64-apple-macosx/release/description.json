@@ -1,0 +1,497 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.MacOptimizer-arm64-apple-macosx-release.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/sources",
+      "importPath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "MacOptimizer",
+      "moduleOutputPath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/Modules/MacOptimizer.swiftmodule",
+      "objects" : [
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ContentView.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/MacOptimizerApp.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupItem.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessInfo.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/Suggestion.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/KnowledgeBase.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessMonitor.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ShellRunner.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsService.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SystemCleaner.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupView.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/DashboardView.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessesView.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsView.swift.o",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SuggestionsView.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-whole-module-optimization",
+        "-num-threads",
+        "8",
+        "-serialize-diagnostics",
+        "-O",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "MacOptimizer_main",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "macoptimizer"
+      ],
+      "outputFileMapPath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ContentView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/MacOptimizerApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupItem.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessInfo.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/Suggestion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/KnowledgeBase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ShellRunner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SystemCleaner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/DashboardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessesView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SuggestionsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/Modules/MacOptimizer.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift",
+        "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift"
+      ],
+      "tempsPath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build",
+      "wholeModuleOptimization" : true
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "MacOptimizer" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "MacOptimizer",
+      "-package-name",
+      "macoptimizer",
+      "-c",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift",
+      "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift",
+      "-I",
+      "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-whole-module-optimization",
+      "-num-threads",
+      "8",
+      "-serialize-diagnostics",
+      "-O",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "MacOptimizer_main",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "macoptimizer",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "MacOptimizer" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/MacOptimizerApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/CleanupItem.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/ProcessInfo.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Models/Suggestion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/KnowledgeBase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ProcessMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/ShellRunner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/StartupItemsService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Services/SystemCleaner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/CleanupView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/DashboardView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/ProcessesView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/StartupItemsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/Sources/MacOptimizer/Views/SuggestionsView.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/sources"
+    },
+    "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupItem.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/CleanupView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ContentView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/DashboardView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/KnowledgeBase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/MacOptimizerApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessInfo.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ProcessesView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/ShellRunner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/StartupItemsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/Suggestion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SuggestionsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.build/SystemCleaner.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/MacOptimizer.product/Objects.LinkFileList"
+    },
+    "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/prithvibondili/Projects/MacOptimizer/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
