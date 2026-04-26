@@ -67,7 +67,16 @@ class StartupItemsService: ObservableObject {
         let cmd = item.isEnabled
             ? "launchctl unload -w '\(item.path)'"
             : "launchctl load -w '\(item.path)'"
-        _ = try? await shell.run(cmd)
+        
+        do {
+            if item.source == .launchDaemon {
+                _ = try await shell.runWithAdmin(cmd)
+            } else {
+                _ = try await shell.run(cmd)
+            }
+        } catch {
+            print("Failed to toggle startup item: \(error)")
+        }
         await load()
     }
 

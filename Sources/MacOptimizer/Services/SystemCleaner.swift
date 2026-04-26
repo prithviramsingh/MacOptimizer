@@ -84,20 +84,31 @@ class SystemCleaner: ObservableObject {
         let cachesDir = fm.homeDirectoryForCurrentUser.appendingPathComponent("Library/Caches").path
         guard let entries = try? fm.contentsOfDirectory(atPath: cachesDir) else { return [] }
 
-        var result: [CleanupItem] = []
-        for entry in entries.prefix(30) {
-            let fullPath = "\(cachesDir)/\(entry)"
-            let size = await shell.directorySize(at: fullPath)
-            guard size > 1_024 * 1_024 else { continue }   // skip <1 MB
-            result.append(CleanupItem(
-                name:        entry,
-                path:        fullPath,
-                sizeBytes:   size,
-                category:    .userCache,
-                description: "Application cache in ~/Library/Caches"
-            ))
+        // Increase scan depth to 100 and parallelise size checks
+        return await withTaskGroup(of: CleanupItem?.self) { group in
+            for entry in entries.prefix(100) {
+                let fullPath = "\(cachesDir)/\(entry)"
+                group.addTask {
+                    let size = await self.shell.directorySize(at: fullPath)
+                    guard size > 1_024 * 1_024 else { return nil } // skip < 1MB
+                    return CleanupItem(
+                        name:        entry,
+                        path:        fullPath,
+                        sizeBytes:   size,
+                        category:    .userCache,
+                        description: "Application cache in ~/Library/Caches"
+                    )
+                }
+            }
+            
+            var result: [CleanupItem] = []
+            for await item in group {
+                if let item = item {
+                    result.append(item)
+                }
+            }
+            return result
         }
-        return result
     }
 
     private func scanLogs() async -> [CleanupItem] {

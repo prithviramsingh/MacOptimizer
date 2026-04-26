@@ -67,7 +67,7 @@ class ProcessMonitor: ObservableObject {
     func refresh() async {
         // To match Activity Monitor perfectly, we use 'top' which gets the kernel-calculated instantaneous CPU%
         // and footprint/resident memory across a short delta.
-        guard let output = try? await shell.run("top -l 2 -s 0 -n 100 -stats pid,cpu,mem,user,command 2>/dev/null") else { return }
+        guard let output = try? await shell.run("top -l 2 -s 0 -n 250 -stats pid,cpu,mem,user,command 2>/dev/null") else { return }
         
         let snapshots = parseTop(output)
 
