@@ -52,6 +52,11 @@ jobs:
         p12-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
         keychain-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
 
+    - name: Debug Keychain Identities
+      if: env.HAS_SECRETS == 'true' && startsWith(github.ref, 'refs/tags/v')
+      run: |
+        security find-identity -v -p codesigning
+
     - name: Build Release
       run: swift build -c release
 
