@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>macOS Tahoe — Liquid Glass Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* soft aurora gradient desktop */
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%, #b8d4f5 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 80% 70%, #d4b8f5 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 50% 100%, #f5c8d4 0%, transparent 60%),
+        #c8daf0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* ── Scrollbar ─────────────────────────────────── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 99px;
+    }
+
+    /* ── Hover states ───────────────────────────────── */
+    .file-card {
+      transition: transform 120ms ease, box-shadow 120ms ease;
+      cursor: default;
+    }
+
+    .file-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .sidebar-item {
+      transition: background 100ms ease;
+      cursor: default;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const MAC_FONT = "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif";
+
+    /* ── Liquid Glass primitive ───────────────────────────── */
+    function MacGlass({ children, radius = 999, style = {} }) {
+      return (
+        <div style={{ position: 'relative', borderRadius: radius, ...style }}>
+          <div style={{
+            position: 'absolute', inset: 0, borderRadius: radius,
+            background: 'rgba(255,255,255,0.38)',
+            backdropFilter: 'blur(28px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+            border: '0.5px solid rgba(255,255,255,0.65)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.55)',
+          }} />
+          <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
+        </div>
+      );
+    }
+
+    /* ── Toolbar ─────────────────────────────────────────── */
+    function MacToolbar({ title = 'Folder' }) {
+      return (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          padding: '10px 14px 6px', flexShrink: 0,
+          borderBottom: '0.5px solid rgba(0,0,0,0.06)',
+        }}>
+          <div style={{
+            fontFamily: MAC_FONT, fontSize: 14, fontWeight: 700,
+            color: 'rgba(0,0,0,0.82)', letterSpacing: '-0.01em',
+          }}>{title}</div>
+
+          <div style={{ flex: 1 }} />
+
+          {/* View toggle */}
+          <MacGlass style={{ borderRadius: 10 }}>
+            <div style={{ display: 'flex', padding: 3, gap: 1 }}>
+              {[GridIcon, ListIcon].map((Icon, i) => (
+                <div key={i} style={{
+                  width: 30, height: 26, display: 'flex', alignItems: 'center',
+                  justifyContent: 'center', borderRadius: 7,
+                  background: i === 0 ? 'rgba(0,0,0,0.08)' : 'transparent',
+                }}>
+                  <Icon />
+                </div>
+              ))}
+            </div>
+          </MacGlass>
+
+          {/* Search */}
+          <MacGlass style={{ borderRadius: 10 }}>
+            <div style={{
+              height: 32, width: 148, display: 'flex', alignItems: 'center',
+              gap: 7, padding: '0 12px',
+            }}>
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <circle cx="5.5" cy="5.5" r="4" stroke="rgba(0,0,0,0.35)" strokeWidth="1.5" />
+                <path d="M8.5 8.5l3 3" stroke="rgba(0,0,0,0.35)" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              <span style={{ fontFamily: MAC_FONT, fontSize: 12.5, fontWeight: 500, color: 'rgba(0,0,0,0.35)' }}>
+                Search
+              </span>
+            </div>
+          </MacGlass>
+        </div>
+      );
+    }
+
+    /* ── SVG Icons ───────────────────────────────────────── */
+    const GridIcon = () => (
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <rect x="1" y="1" width="5" height="5" rx="1.5" fill="rgba(0,0,0,0.5)" />
+        <rect x="8" y="1" width="5" height="5" rx="1.5" fill="rgba(0,0,0,0.5)" />
+        <rect x="1" y="8" width="5" height="5" rx="1.5" fill="rgba(0,0,0,0.5)" />
+        <rect x="8" y="8" width="5" height="5" rx="1.5" fill="rgba(0,0,0,0.5)" />
+      </svg>
+    );
+    const ListIcon = () => (
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <rect x="1" y="2.5" width="12" height="1.5" rx="0.75" fill="rgba(0,0,0,0.35)" />
+        <rect x="1" y="6.25" width="12" height="1.5" rx="0.75" fill="rgba(0,0,0,0.35)" />
+        <rect x="1" y="10" width="12" height="1.5" rx="0.75" fill="rgba(0,0,0,0.35)" />
+      </svg>
+    );
+    const ChevronIcon = ({ color = 'rgba(0,0,0,0.3)' }) => (
+      <svg width="7" height="11" viewBox="0 0 7 11" fill="none">
+        <path d="M1 1l4.5 4.5L1 10" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+
+    /* ── Sidebar item ────────────────────────────────────── */
+    function MacSidebarItem({ label, icon, selected = false, count }) {
+      return (
+        <div className="sidebar-item" style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          height: 28, padding: '0 10px', margin: '0 6px',
+          borderRadius: 8, position: 'relative',
+          background: selected ? 'rgba(0,0,0,0.09)' : 'transparent',
+        }}>
+          <div style={{
+            width: 18, height: 18, borderRadius: 5,
+            background: selected
+              ? 'linear-gradient(135deg, #007aff 0%, #34aadc 100%)'
+              : 'rgba(0,0,0,0.18)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
+          }}>
+            {icon}
+          </div>
+          <span style={{
+            fontFamily: MAC_FONT, fontSize: 12, fontWeight: selected ? 600 : 500,
+            color: selected ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0.65)',
+            flex: 1,
+          }}>{label}</span>
+          {count != null && (
+            <span style={{
+              fontFamily: MAC_FONT, fontSize: 10, fontWeight: 600,
+              color: 'rgba(0,0,0,0.35)',
+            }}>{count}</span>
+          )}
+        </div>
+      );
+    }
+
+    /* ── Sidebar header ──────────────────────────────────── */
+    function MacSidebarHeader({ title }) {
+      return (
+        <div style={{
+          padding: '12px 16px 4px',
+          fontFamily: MAC_FONT, fontSize: 10, fontWeight: 700,
+          letterSpacing: '0.06em', textTransform: 'uppercase',
+          color: 'rgba(0,0,0,0.38)',
+        }}>{title}</div>
+      );
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    function MacSidebar({ children }) {
+      return (
+        <div style={{
+          width: 210, height: '100%', padding: '8px 0',
+          flexShrink: 0, position: 'relative',
+          borderRight: '0.5px solid rgba(0,0,0,0.07)',
+          display: 'flex', flexDirection: 'column',
+          background: 'rgba(236,242,252,0.55)',
+          backdropFilter: 'blur(60px) saturate(200%)',
+          WebkitBackdropFilter: 'blur(60px) saturate(200%)',
+        }}>
+          {children}
+        </div>
+      );
+    }
+
+    /* ── Window ──────────────────────────────────────────── */
+    function MacWindow({ width = 900, height = 600, title = 'Folder', sidebar, children }) {
+      return (
+        <div style={{
+          width, height, borderRadius: 24, overflow: 'hidden',
+          background: 'rgba(250,251,254,0.82)',
+          backdropFilter: 'blur(80px)',
+          WebkitBackdropFilter: 'blur(80px)',
+          boxShadow: '0 0 0 0.5px rgba(0,0,0,0.18), 0 20px 60px rgba(0,0,0,0.28), 0 4px 12px rgba(0,0,0,0.10)',
+          display: 'flex', position: 'relative',
+          fontFamily: MAC_FONT,
+        }}>
+          <MacSidebar>{sidebar}</MacSidebar>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+            <MacToolbar title={title} />
+            <div style={{ flex: 1, overflow: 'auto', padding: '12px 14px' }}>
+              {children}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── Tiny SVG folder icons ────────────────────────────── */
+    const FolderSvg = ({ color }) => (
+      <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+        <path d="M0.5 1.5C0.5 1.22386 0.723858 1 1 1H4.08579C4.21839 1 4.34557 1.05268 4.43934 1.14645L5.06066 1.76777C5.15442 1.86154 5.28161 1.91421 5.41421 1.91421H10C10.2761 1.91421 10.5 2.13807 10.5 2.41421V7.5C10.5 7.77614 10.2761 8 10 8H1C0.723858 8 0.5 7.77614 0.5 7.5V1.5Z" fill="white" fillOpacity="0.85" />
+      </svg>
+    );
+
+    /* ── Demo App ─────────────────────────────────────────── */
+    const sidebarData = {
+      favorites: [
+        { label: 'Recents', selected: true, count: 12 },
+        { label: 'Desktop', count: 3 },
+        { label: 'Downloads', count: 8 },
+        { label: 'Applications', count: 47 },
+      ],
+      locations: [
+        { label: 'Documents' },
+        { label: 'MacOptimizer' },
+        { label: 'Logs' },
+      ],
+    };
+
+    const files = [
+      { name: 'System Report', size: '4.2 MB', date: 'Today', color: '#3478f6', tag: 'Report' },
+      { name: 'Performance Log', size: '1.8 MB', date: 'Yesterday', color: '#30d158', tag: 'Log' },
+      { name: 'Optimizer Config', size: '24 KB', date: 'Apr 20', color: '#ff9f0a', tag: 'Config' },
+      { name: 'Memory Snapshot', size: '12.6 MB', date: 'Apr 19', color: '#bf5af2', tag: 'Snapshot' },
+      { name: 'Startup Items', size: '8 KB', date: 'Apr 18', color: '#ff453a', tag: 'Items' },
+      { name: 'CPU Trace', size: '3.1 MB', date: 'Apr 17', color: '#64d2ff', tag: 'Trace' },
+      { name: 'Disk Health', size: '920 KB', date: 'Apr 16', color: '#ffd60a', tag: 'Health' },
+      { name: 'Network Stats', size: '560 KB', date: 'Apr 15', color: '#30d160', tag: 'Stats' },
+    ];
+
+    function FileCard({ name, size, date, color, tag }) {
+      return (
+        <div className="file-card" style={{
+          borderRadius: 14,
+          background: 'rgba(255,255,255,0.72)',
+          border: '0.5px solid rgba(0,0,0,0.07)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+          padding: '14px 14px 12px',
+          display: 'flex', flexDirection: 'column', gap: 10,
+        }}>
+          {/* Icon */}
+          <div style={{
+            width: 44, height: 44, borderRadius: 12,
+            background: `linear-gradient(145deg, ${color}cc, ${color})`,
+            boxShadow: `0 4px 12px ${color}55`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <FolderSvg color={color} />
+          </div>
+          {/* Label */}
+          <div>
+            <div style={{ fontSize: 12.5, fontWeight: 600, color: 'rgba(0,0,0,0.82)', lineHeight: 1.3 }}>{name}</div>
+            <div style={{ fontSize: 10.5, color: 'rgba(0,0,0,0.4)', marginTop: 2 }}>{size}</div>
+          </div>
+          {/* Footer */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: 10, color: 'rgba(0,0,0,0.32)' }}>{date}</span>
+            <span style={{
+              fontSize: 9.5, fontWeight: 600, color: color,
+              background: `${color}18`, borderRadius: 5,
+              padding: '2px 6px',
+            }}>{tag}</span>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <MacWindow width={860} height={540} title="MacOptimizer"
+          sidebar={
+            <>
+              <MacSidebarHeader title="Favorites" />
+              {sidebarData.favorites.map(item => (
+                <MacSidebarItem key={item.label} {...item}
+                  icon={<FolderSvg />}
+                />
+              ))}
+              <MacSidebarHeader title="Locations" />
+              {sidebarData.locations.map(item => (
+                <MacSidebarItem key={item.label} {...item}
+                  icon={<FolderSvg />}
+                />
+              ))}
+            </>
+          }
+        >
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))',
+            gap: 10,
+          }}>
+            {files.map(f => <FileCard key={f.name} {...f} />)}
+          </div>
+        </MacWindow>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

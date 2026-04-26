@@ -3,6 +3,9 @@ set -e
 
 cd "$(dirname "$0")"
 
+echo "Cleaning..."
+swift package clean 2>&1
+
 echo "Building..."
 swift build 2>&1
 

@@ -1,5 +1,20 @@
 import SwiftUI
 
+// MARK: - Environment key for the static process DB
+// Using @Environment (not @EnvironmentObject) means views that only need the DB
+// don't subscribe to KnowledgeBase's @Published changes.
+
+private struct ProcessKnowledgeDBKey: EnvironmentKey {
+    static let defaultValue: [String: ProcessKnowledge] = [:]
+}
+
+extension EnvironmentValues {
+    var processKnowledgeDB: [String: ProcessKnowledge] {
+        get { self[ProcessKnowledgeDBKey.self] }
+        set { self[ProcessKnowledgeDBKey.self] = newValue }
+    }
+}
+
 struct ProcessKnowledge {
     let displayName: String
     let description: String

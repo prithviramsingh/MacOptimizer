@@ -167,30 +167,8 @@ function Sidebar({ state, dispatch }) {
       display:'flex', flexDirection:'column',
       position:'relative',
     }}>
-      {/* traffic lights */}
-      <div style={{height: 38, display:'flex', alignItems:'center', padding:'0 16px', gap:8}}>
-        <MacTrafficLights/>
-      </div>
-
-      {/* brand */}
-      <div style={{padding:'14px 20px 18px'}}>
-        <div style={{display:'flex', alignItems:'center', gap:10}}>
-          <div style={{width:30, height:30, borderRadius:9,
-            background:'var(--ink)', color:'var(--paper)',
-            display:'flex', alignItems:'center', justifyContent:'center',
-            position:'relative', overflow:'hidden'}}>
-            <Icon name="apple" size={18} stroke={0}/>
-            <div style={{position:'absolute', bottom:-2, right:-2, width:10, height:10, borderRadius:'50%', background:'var(--accent)', border:'2px solid var(--ink)'}}/>
-          </div>
-          <div style={{minWidth:0}}>
-            <div style={{fontFamily:'var(--font-hero)', fontSize:18, letterSpacing:'-0.02em', lineHeight:1, fontWeight:400}}>
-              MacOptimizer
-            </div>
-            <div style={{fontSize:10, color:'var(--ink-50)', letterSpacing:'0.1em', textTransform:'uppercase', fontWeight:700, marginTop:3}}>
-              v1.0 · native
-            </div>
-          </div>
-        </div>
+      {/* brand placeholder */}
+      <div style={{padding:'10px 20px 10px'}}>
       </div>
 
       {/* nav */}

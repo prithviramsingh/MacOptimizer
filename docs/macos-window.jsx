@@ -1,7 +1,7 @@
 
 // MacOS.jsx — Simplified macOS Tahoe (Liquid Glass) window
 // Based on the macOS Tahoe UI Kit. No image assets, no dependencies.
-// Exports: MacWindow, MacSidebar, MacSidebarItem, MacToolbar, MacGlass, MacTrafficLights
+// Exports: MacWindow, MacSidebar, MacSidebarItem, MacSidebarHeader, MacToolbar, MacGlass
 
 const MAC_FONT = '-apple-system, BlinkMacSystemFont, "SF Pro", "Helvetica Neue", sans-serif';
 
@@ -26,24 +26,7 @@ function MacGlass({ children, radius = 296, dark = false, style = {} }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Traffic lights (14px, Tahoe colors)
-// ─────────────────────────────────────────────────────────────
-function MacTrafficLights({ style = {} }) {
-  const dot = (bg) => (
-    <div style={{
-      width: 14, height: 14, borderRadius: '50%', background: bg,
-      border: '0.5px solid rgba(0,0,0,0.1)',
-    }} />
-  );
-  return (
-    <div style={{ display: 'flex', gap: 9, alignItems: 'center', padding: 1, ...style }}>
-      {dot('#ff736a')}{dot('#febc2e')}{dot('#19c332')}
-    </div>
-  );
-}
 
-// ─────────────────────────────────────────────────────────────
 // Toolbar — title + single glass pill icon
 // ─────────────────────────────────────────────────────────────
 function MacToolbar({ title = 'Folder' }) {
@@ -63,7 +46,6 @@ function MacToolbar({ title = 'Folder' }) {
           width: 36, height: 36, display: 'flex',
           alignItems: 'center', justifyContent: 'center',
         }}>
-          <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#4c4c4c', opacity: 0.4 }} />
         </div>
       </MacGlass>
       {/* search */}
@@ -73,8 +55,8 @@ function MacToolbar({ title = 'Folder' }) {
           gap: 6, padding: '0 12px',
         }}>
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-            <circle cx="5.5" cy="5.5" r="4" stroke="#727272" strokeWidth="1.5"/>
-            <path d="M8.5 8.5l3 3" stroke="#727272" strokeWidth="1.5" strokeLinecap="round"/>
+            <circle cx="5.5" cy="5.5" r="4" stroke="#727272" strokeWidth="1.5" />
+            <path d="M8.5 8.5l3 3" stroke="#727272" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <span style={{
             fontFamily: MAC_FONT, fontSize: 13, fontWeight: 500, color: '#727272',
@@ -102,11 +84,6 @@ function MacSidebarItem({ label, selected = false }) {
           background: 'rgba(0,0,0,0.11)', mixBlendMode: 'multiply',
         }} />
       )}
-      <div style={{
-        width: 14, height: 14, borderRadius: '50%',
-        background: selected ? '#007aff' : 'rgba(0,0,0,0.4)',
-        opacity: selected ? 1 : 0.5, flexShrink: 0, position: 'relative',
-      }} />
       <span style={{ color: 'rgba(0,0,0,0.85)', position: 'relative' }}>{label}</span>
     </div>
   );
@@ -129,16 +106,9 @@ function MacSidebar({ children }) {
       }} />
       {/* content */}
       <div style={{
-        position: 'relative', zIndex: 1, padding: '10px 0',
+        position: 'relative', zIndex: 1, padding: '8px 0',
         display: 'flex', flexDirection: 'column', gap: 2,
       }}>
-        {/* window controls + sidebar toggle */}
-        <div style={{
-          height: 32, display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', padding: '0 10px', marginBottom: 4,
-        }}>
-          <MacTrafficLights />
-        </div>
         {children}
       </div>
     </div>
@@ -183,5 +153,5 @@ function MacWindow({
 
 Object.assign(window, {
   MacWindow, MacSidebar, MacSidebarItem, MacSidebarHeader,
-  MacToolbar, MacGlass, MacTrafficLights,
+  MacToolbar, MacGlass,
 });

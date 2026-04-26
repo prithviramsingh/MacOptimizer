@@ -328,7 +328,7 @@ function ProcessesView({ state, dispatch }) {
       <div style={{display:'grid', gridTemplateColumns: selected ? '1fr 320px' : '1fr', gap:16, alignItems:'start', flex:1}}>
         <Card pad={0} style={{overflow:'hidden'}}>
           <div style={{display:'grid', gridTemplateColumns:'minmax(180px, 2.2fr) 56px 74px 78px minmax(80px, 1fr) 24px',
-            padding:'14px 20px', borderBottom:'1px solid var(--ink-8)', gap:12,
+            padding:'6px 20px', borderBottom:'1px solid var(--ink-8)', gap:12,
             background:'var(--surface-deep)'}}>
             {header('Process', 'name')}
             {header('PID', 'pid', 'right')}
