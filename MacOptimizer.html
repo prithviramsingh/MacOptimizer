@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacOptimizer - System Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .dark .glass { background: rgba(30, 30, 30, 0.7); backdrop-filter: blur(10px); }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 transition-colors duration-300">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+        const { motion, AnimatePresence } = FramerMotion;
+
+        const Icon = ({ name, size = 20, className = "" }) => {
+            useEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
+            return <i data-lucide={name} style={{ width: size, height: size }} className={className}></i>;
+        };
+
+        const StatCircle = ({ label, value, color, icon }) => {
+            const radius = 36;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (value / 100) * circumference;
+
+            return (
+                <div className="flex flex-col items-center p-6 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-700">
+                    <div className="relative w-32 h-32 flex items-center justify-center">
+                        <svg className="w-full h-full transform -rotate-90">
+                            <circle
+                                cx="64" cy="64" r={radius}
+                                stroke="currentColor" strokeWidth="8"
+                                fill="transparent"
+                                className="text-gray-100 dark:text-zinc-700"
+                            />
+                            <motion.circle
+                                cx="64" cy="64" r={radius}
+                                stroke={color} strokeWidth="8"
+                                fill="transparent"
+                                strokeDasharray={circumference}
+                                initial={{ strokeDashoffset: circumference }}
+                                animate={{ strokeDashoffset: offset }}
+                                transition={{ duration: 1.5, ease: "easeOut" }}
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                        <div className="absolute flex flex-col items-center">
+                            <span className="text-2xl font-bold">{value}%</span>
+                            <span className="text-[10px] uppercase tracking-wider opacity-50 font-semibold">{label}</span>
+                        </div>
+                    </div>
+                    <div className="mt-4 flex items-center gap-2 text-sm font-medium opacity-70">
+                        <Icon name={icon} size={14} />
+                        <span>Real-time</span>
+                    </div>
+                </div>
+            );
+        };
+
+        const SidebarItem = ({ id, icon, label, active, onClick, badge }) => (
+            <button
+                onClick={() => onClick(id)}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 ${
+                    active 
+                    ? 'bg-blue-500 text-white shadow-md shadow-blue-500/20' 
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-zinc-800'
+                }`}
+            >
+                <Icon name={icon} size={18} />
+                <span className="text-sm font-medium flex-1 text-left">{label}</span>
+                {badge && (
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
+                        active ? 'bg-white/20' : 'bg-red-500 text-white'
+                    }`}>
+                        {badge}
+                    </span>
+                )}
+            </button>
+        );
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('dashboard');
+            const [isScanning, setIsScanning] = useState(false);
+            const [scanProgress, setScanProgress] = useState(0);
+            const [isDarkMode, setIsDarkMode] = useState(false);
+            const [stats, setStats] = useState({ cpu: 12, mem: 42, disk: 68 });
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setStats(s => ({
+                        cpu: Math.max(5, Math.min(95, s.cpu + (Math.random() * 10 - 5))),
+                        mem: Math.max(30, Math.min(90, s.mem + (Math.random() * 4 - 2))),
+                        disk: s.disk
+                    }));
+                }, 3000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const handleScan = () => {
+                setIsScanning(true);
+                setScanProgress(0);
+                const interval = setInterval(() => {
+                    setScanProgress(p => {
+                        if (p >= 100) {
+                            clearInterval(interval);
+                            setIsScanning(false);
+                            return 100;
+                        }
+                        return p + 2;
+                    });
+                }, 50);
+            };
+
+            return (
+                <div className={`${isDarkMode ? 'dark' : ''} h-screen flex items-center justify-center p-4 md:p-8 bg-zinc-200 dark:bg-zinc-950 transition-colors`}>
+                    <div className="w-full max-w-6xl h-full max-h-[800px] flex bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border border-gray-200 dark:border-zinc-800">
+                        {/* Sidebar */}
+                        <aside className="w-64 bg-gray-50 dark:bg-zinc-900/50 border-r border-gray-100 dark:border-zinc-800 flex flex-col p-6">
+                            <div className="flex items-center gap-3 mb-10 px-2">
+                                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                                    <Icon name="zap" size={20} />
+                                </div>
+                                <h1 className="text-lg font-bold tracking-tight">MacOptimizer</h1>
+                            </div>
+
+                            <nav className="flex-1 space-y-1">
+                                <SidebarItem id="dashboard" icon="layout-dashboard" label="Dashboard" active={activeTab === 'dashboard'} onClick={setActiveTab} />
+                                <SidebarItem id="cleanup" icon="trash-2" label="Cleanup" active={activeTab === 'cleanup'} onClick={setActiveTab} badge="2.4G" />
+                                <SidebarItem id="optimization" icon="cpu" label="Optimization" active={activeTab === 'optimization'} onClick={setActiveTab} />
+                                <SidebarItem id="security" icon="shield-check" label="Security" active={activeTab === 'security'} onClick={setActiveTab} />
+                                <SidebarItem id="privacy" icon="lock" label="Privacy" active={activeTab === 'privacy'} onClick={setActiveTab} />
+                            </nav>
+
+                            <div className="mt-auto pt-6 border-t border-gray-100 dark:border-zinc-800">
+                                <button 
+                                    onClick={() => setIsDarkMode(!isDarkMode)}
+                                    className="w-full flex items-center gap-3 px-4 py-2 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+                                >
+                                    <Icon name={isDarkMode ? "sun" : "moon"} size={18} />
+                                    <span className="text-sm font-medium">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                                </button>
+                            </div>
+                        </aside>
+
+                        {/* Main Content */}
+                        <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-zinc-900">
+                            {/* Header */}
+                            <header className="h-16 flex items-center justify-between px-8 border-bottom border-gray-100 dark:border-zinc-800">
+                                <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-widest">{activeTab}</h2>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2 text-xs font-medium text-green-500 bg-green-500/10 px-3 py-1.5 rounded-full">
+                                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                        System Healthy
+                                    </div>
+                                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors">
+                                        <Icon name="settings" size={20} />
+                                    </button>
+                                </div>
+                            </header>
+
+                            {/* Content Area */}
+                            <div className="flex-1 overflow-y-auto p-8">
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4 }}
+                                >
+                                    <div className="mb-8">
+                                        <h3 className="text-3xl font-bold mb-2">System Overview</h3>
+                                        <p className="text-gray-500 dark:text-gray-400">Everything looks great. Your Mac was last optimized 2 hours ago.</p>
+                                    </div>
+
+                                    {/* Stats Grid */}
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                        <StatCircle label="CPU" value={Math.round(stats.cpu)} color="#3B82F6" icon="activity" />
+                                        <StatCircle label="Memory" value={Math.round(stats.mem)} color="#10B981" icon="pie-chart" />
+                                        <StatCircle label="Storage" value={Math.round(stats.disk)} color="#F59E0B" icon="hard-drive" />
+                                    </div>
+
+                                    {/* Action Cards */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="p-6 bg-blue-50 dark:bg-blue-500/10 rounded-2xl border border-blue-100 dark:border-blue-500/20">
+                                            <div className="flex items-start justify-between mb-4">
+                                                <div>
+                                                    <h4 className="text-lg font-bold mb-1">One-Click Optimize</h4>
+                                                    <p className="text-sm text-blue-600 dark:text-blue-400">Perform a full system check and cleanup.</p>
+                                                </div>
+                                                <div className="p-2 bg-blue-500 text-white rounded-xl shadow-lg shadow-blue-500/30">
+                                                    <Icon name="rocket" size={24} />
+                                                </div>
+                                            </div>
+                                            <button 
+                                                onClick={handleScan}
+                                                disabled={isScanning}
+                                                className={`w-full py-3 rounded-xl font-bold transition-all ${
+                                                    isScanning 
+                                                    ? 'bg-blue-200 dark:bg-zinc-800 text-blue-500 cursor-not-allowed' 
+                                                    : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg shadow-blue-500/25'
+                                                }`}
+                                            >
+                                                {isScanning ? `Scanning... ${scanProgress}%` : 'Start Full Scan'}
+                                            </button>
+                                        </div>
+
+                                        <div className="p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl border border-gray-100 dark:border-zinc-800">
+                                            <div className="flex items-start justify-between mb-6">
+                                                <div>
+                                                    <h4 className="text-lg font-bold mb-1">Security Status</h4>
+                                                    <p className="text-sm text-gray-500">Real-time protection is active.</p>
+                                                </div>
+                                                <div className="p-2 bg-green-500 text-white rounded-xl shadow-lg shadow-green-500/30">
+                                                    <Icon name="shield" size={24} />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center justify-between text-sm">
+                                                    <span className="text-gray-500">Malware Database</span>
+                                                    <span className="font-semibold text-green-500">Up to date</span>
+                                                </div>
+                                                <div className="flex items-center justify-between text-sm">
+                                                    <span className="text-gray-500">Firewall</span>
+                                                    <span className="font-semibold text-gray-900 dark:text-white">Enabled</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

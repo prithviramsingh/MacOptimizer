@@ -1,4 +1,28 @@
 import SwiftUI
+import AppKit
+
+private func makeAppIcon() -> NSImage {
+    let size = CGSize(width: 512, height: 512)
+    return NSImage(size: size, flipped: false) { rect in
+        let inset = rect.insetBy(dx: 16, dy: 16)
+        let path = NSBezierPath(roundedRect: inset, xRadius: 110, yRadius: 110)
+        NSGradient(colors: [
+            NSColor(red: 0.40, green: 0.28, blue: 0.96, alpha: 1),
+            NSColor(red: 0.65, green: 0.33, blue: 0.97, alpha: 1)
+        ])?.draw(in: path, angle: -45)
+
+        let symSize: CGFloat = 270
+        let symRect = NSRect(x: (rect.width - symSize) / 2,
+                             y: (rect.height - symSize) / 2,
+                             width: symSize, height: symSize)
+        if let sym = NSImage(systemSymbolName: "bolt.fill", accessibilityDescription: nil) {
+            let cfg = NSImage.SymbolConfiguration(pointSize: 240, weight: .bold)
+                .applying(NSImage.SymbolConfiguration(paletteColors: [.white]))
+            (sym.withSymbolConfiguration(cfg) ?? sym).draw(in: symRect)
+        }
+        return true
+    }
+}
 
 @main
 struct MacOptimizerApp: App {
@@ -11,6 +35,7 @@ struct MacOptimizerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear { NSApp.applicationIconImage = makeAppIcon() }
                 .environmentObject(processMonitor)
                 .environmentObject(systemCleaner)
                 .environmentObject(startupService)

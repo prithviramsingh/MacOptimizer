@@ -9,6 +9,7 @@ struct ProcessesView: View {
     @State private var filter       = ProcessFilter.all
     @State private var sortKey      = SortKey.cpu
     @State private var sortAsc      = false
+    @Binding var jumpToProcess: ProcessSnapshot?
     @State private var selected: ProcessSnapshot? = nil
     @State private var killTarget: ProcessSnapshot? = nil
 
@@ -56,7 +57,32 @@ struct ProcessesView: View {
                 Rectangle().fill(colors.ink8).frame(height: 1)
                 columnHeaders
                 Rectangle().fill(colors.ink8).frame(height: 1)
-                scrollArea
+                
+                ScrollViewReader { proxy in
+                    scrollArea
+                        .onChange(of: jumpToProcess) { process in
+                            guard let process else { return }
+                            
+                            // Reset filters so the process is actually in 'displayed'
+                            searchText = ""
+                            filter = .all
+                            
+                            // Highlight
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                selected = process
+                            }
+                            
+                            // Scroll to it
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                withAnimation {
+                                    proxy.scrollTo(process.id, anchor: .center)
+                                }
+                            }
+                            
+                            // Clear the jump request
+                            jumpToProcess = nil
+                        }
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
@@ -64,9 +90,10 @@ struct ProcessesView: View {
             if let proc = selected {
                 detailPanel(proc)
                     .frame(minWidth: 260, idealWidth: DS.Size.detailWidth, maxWidth: 480)
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
             }
         }
-        .background(colors.paper)
+        .background(Color.clear)
         .alert("Kill \(killTarget?.name ?? "process")?", isPresented: Binding(
             get: { killTarget != nil },
             set: { if !$0 { killTarget = nil } }
@@ -91,12 +118,12 @@ struct ProcessesView: View {
                 DSEyebrow("Processes · Live")
                 Spacer().frame(width: DS.Space.sm)
                 Text(String(format: "%d processes", processMonitor.processes.count))
-                    .font(.system(size: 16, weight: .regular, design: .serif))
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(colors.ink)
                 Text("·")
                     .foregroundStyle(colors.ink30)
                 Text("\(processMonitor.resourceHogs.count) hogs")
-                    .font(.system(size: 16, weight: .regular, design: .serif))
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(processMonitor.resourceHogs.isEmpty ? colors.good : colors.accent)
                     .italic()
                 Spacer()
@@ -163,6 +190,7 @@ struct ProcessesView: View {
             LazyVStack(spacing: 0) {
                 ForEach(displayed) { proc in
                     processRow(proc)
+                        .id(proc.id)
                     Divider()
                         .padding(.leading, DS.Space.lg)
                         .opacity(0.4)
@@ -171,7 +199,7 @@ struct ProcessesView: View {
             .padding(.top, 4)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(colors.paper)
+        .background(Color.clear)
     }
 
     // Column widths must match processRow exactly:
@@ -258,7 +286,7 @@ struct ProcessesView: View {
 
             // CPU
             Text(String(format: "%.1f%%", proc.cpuPercent))
-                .font(.system(size: 14, weight: .regular, design: .serif))
+                .font(.system(size: 14, weight: .regular))
                 .foregroundStyle(proc.cpuPercent > 20 ? colors.accent : colors.ink70)
                 .frame(width: 56, alignment: .trailing)
 

@@ -43,7 +43,7 @@ struct StartupItemsView: View {
             }
             .padding(DS.Space.xl)
         }
-        .background(colors.paper)
+        .background(Color.clear)
         .onAppear {
             if startupService.items.isEmpty {
                 Task { await startupService.load() }
@@ -59,11 +59,11 @@ struct StartupItemsView: View {
 
             HStack(alignment: .firstTextBaseline) {
                 Text(String(format: "%d", enabledCount))
-                    .font(.system(size: 26, weight: .regular, design: .serif))
+                    .font(.system(size: 26, weight: .semibold))
                     .foregroundStyle(colors.accent)
                     .italic()
                 Text(String(format: " of %d launch at login", startupService.items.count))
-                    .font(.system(size: 26, weight: .regular, design: .serif))
+                    .font(.system(size: 26, weight: .semibold))
                     .foregroundStyle(colors.ink)
                 Spacer()
                 DSBtn("Refresh", variant: .ghost, small: true) {
@@ -113,7 +113,7 @@ struct StartupItemsView: View {
                     .font(.system(size: 36))
                     .foregroundStyle(colors.ink20)
                 Text("No startup items found")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
+                    .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(colors.ink)
                 Text("You may need to grant Full Disk Access to read launch agents.")
                     .font(AppFont.bodyUI)

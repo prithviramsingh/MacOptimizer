@@ -5,6 +5,8 @@ struct SuggestionsView: View {
     @EnvironmentObject private var knowledgeBase:  KnowledgeBase
     @EnvironmentObject private var processMonitor: ProcessMonitor
 
+    @Binding var jumpToSuggestion: Suggestion?
+    @Binding var jumpToProcess: ProcessSnapshot?
     @State private var severityFilter: SeverityFilter = .all
 
     enum SeverityFilter: String, CaseIterable {
@@ -29,23 +31,36 @@ struct SuggestionsView: View {
     // MARK: - Body
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: DS.Space.xl) {
-                headerSection
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: DS.Space.xl) {
+                    headerSection
 
-                if displayed.isEmpty {
-                    emptyState
-                } else {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 320))], spacing: DS.Space.md) {
-                        ForEach(displayed) { sug in
-                            SuggestionCard(suggestion: sug)
+                    if displayed.isEmpty {
+                        emptyState
+                    } else {
+                        VStack(spacing: DS.Space.md) {
+                            ForEach(displayed) { sug in
+                                SuggestionCard(suggestion: sug) { snapshot in
+                                    jumpToProcess = snapshot
+                                }
+                                .id(sug.id)
+                            }
                         }
                     }
                 }
+                .padding(DS.Space.xl)
             }
-            .padding(DS.Space.xl)
+            .onChange(of: jumpToSuggestion) { suggestion in
+                guard let suggestion else { return }
+                severityFilter = .all
+                jumpToSuggestion = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
+                    withAnimation { proxy.scrollTo(suggestion.id, anchor: .top) }
+                }
+            }
         }
-        .background(colors.paper)
+        .background(Color.clear)
     }
 
     // MARK: - Header
@@ -57,19 +72,19 @@ struct SuggestionsView: View {
             HStack(alignment: .firstTextBaseline) {
                 if knowledgeBase.suggestions.isEmpty {
                     Text("All clear. ")
-                        .font(.system(size: 26, weight: .regular, design: .serif))
+                        .font(.system(size: 26, weight: .semibold))
                         .foregroundStyle(colors.ink)
                     Text("Nothing to fix.")
-                        .font(.system(size: 26, weight: .regular, design: .serif))
+                        .font(.system(size: 26, weight: .semibold))
                         .italic()
                         .foregroundStyle(colors.goodStrong)
                 } else {
                     Text("\(knowledgeBase.suggestions.count) ")
-                        .font(.system(size: 26, weight: .regular, design: .serif))
+                        .font(.system(size: 26, weight: .semibold))
                         .foregroundStyle(colors.accent)
                         .italic()
                     Text("fixes ranked by impact")
-                        .font(.system(size: 26, weight: .regular, design: .serif))
+                        .font(.system(size: 26, weight: .semibold))
                         .foregroundStyle(colors.ink)
                 }
                 Spacer()
@@ -146,7 +161,7 @@ struct SuggestionsView: View {
                         .foregroundStyle(colors.goodStrong)
                 }
                 Text("Nothing to flag.")
-                    .font(.system(size: 20, weight: .regular, design: .serif))
+                    .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(colors.ink)
                 Text("Your system is running efficiently.")
                     .font(AppFont.bodyUI)
@@ -165,7 +180,13 @@ struct SuggestionCard: View {
     @EnvironmentObject private var processMonitor: ProcessMonitor
 
     let suggestion: Suggestion
+    let onViewProcess: ((ProcessSnapshot) -> Void)?
     @State private var isExpanded = false
+
+    private var linkedProcess: ProcessSnapshot? {
+        guard let name = suggestion.processName else { return nil }
+        return processMonitor.processes.first { $0.name == name }
+    }
 
     private var severityColor: Color {
         switch suggestion.severity {
@@ -233,6 +254,11 @@ struct SuggestionCard: View {
                             )
                         }
                     }
+                    if let proc = linkedProcess, let onViewProcess {
+                        DSBtn("View Process", variant: .ghost, small: true) {
+                            onViewProcess(proc)
+                        }
+                    }
                     DSBtn("Dismiss", variant: .ghost, small: true) {
                         // No-op: suggestions are re-derived; user can re-analyze
                     }
@@ -248,5 +274,13 @@ struct SuggestionCard: View {
                 .strokeBorder(colors.ink8, lineWidth: 1)
         )
         .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if let proc = linkedProcess {
+                onViewProcess?(proc)
+            } else {
+                withAnimation(.easeInOut(duration: 0.2)) { isExpanded.toggle() }
+            }
+        }
     }
 }

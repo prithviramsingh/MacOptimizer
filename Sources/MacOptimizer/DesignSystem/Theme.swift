@@ -14,8 +14,19 @@ extension Color {
 // MARK: - App Theme
 
 enum AppTheme: String, CaseIterable {
-    case paper    = "Paper"
-    case graphite = "Graphite"
+    case light = "Light"
+    case dark  = "Dark"
+}
+
+// MARK: - Aurora Scene Colors
+
+struct AuroraColors {
+    let blob1: Color // top-left
+    let blob2: Color // top-right
+    let blob3: Color // bottom-right
+    let blob4: Color // bottom-left
+    let base1: Color
+    let base2: Color
 }
 
 // MARK: - Theme Colors
@@ -28,7 +39,7 @@ struct ThemeColors {
     let ink:         Color
 
     // Ink opacity ramp
-    var ink5:  Color { ink.opacity(0.04) }
+    var ink5:  Color { ink.opacity(0.05) }
     var ink8:  Color { ink.opacity(0.08) }
     var ink10: Color { ink.opacity(0.10) }
     var ink15: Color { ink.opacity(0.15) }
@@ -39,58 +50,77 @@ struct ThemeColors {
     var ink60: Color { ink.opacity(0.60) }
     var ink70: Color { ink.opacity(0.74) }
 
-    // Accent: burnt orange (oklch(62% 0.17 35) ≈ #C4613A)
+    // Accent — oklch(64% 0.18 255) ≈ perceptual blue
     let accent:       Color
     let accentStrong: Color
     var accent5:  Color { accent.opacity(0.05) }
     var accent10: Color { accent.opacity(0.12) }
     var accent20: Color { accent.opacity(0.22) }
 
-    // Good: moss green (oklch(55% 0.09 150) ≈ #4E8A5C)
+    // Good — oklch(60% 0.12 160) ≈ muted green
     let good:       Color
     let goodStrong: Color
     var good10: Color { good.opacity(0.12) }
     var good20: Color { good.opacity(0.22) }
 
     // Semantic severity
-    let critical: Color  // red
-    let warning:  Color  // amber
+    let critical: Color
+    let warning:  Color
+
+    // Aurora backdrop
+    let aurora: AuroraColors
 
     // MARK: - Palettes
 
-    static let paper = ThemeColors(
-        paper:       Color(hex: 0xF4EFE7),
-        surface:     Color(hex: 0xFBF8F2),
-        surfaceDeep: Color(hex: 0xEEE8DD),
-        sidebar:     Color(hex: 0xEDE7DB),
+    static let light = ThemeColors(
+        paper:       Color(hex: 0xF6F4EE),
+        surface:     Color.white.opacity(0.55),
+        surfaceDeep: Color.white.opacity(0.38),
+        sidebar:     Color.white.opacity(0.45),
         ink:         Color(hex: 0x1A1A1C),
-        accent:      Color(hex: 0xC4613A),
-        accentStrong: Color(hex: 0x9A4422),
-        good:        Color(hex: 0x4E8A5C),
-        goodStrong:  Color(hex: 0x2D6B3D),
-        critical:    Color(hex: 0xC0392B),
-        warning:     Color(hex: 0xC49A2B)
+        accent:      Color(hex: 0x4B8EF7),
+        accentStrong: Color(hex: 0x2468D8),
+        good:        Color(hex: 0x3DAD7E),
+        goodStrong:  Color(hex: 0x1F8059),
+        critical:    Color(hex: 0xE03B1A),
+        warning:     Color(hex: 0xD97706),
+        aurora: AuroraColors(
+            blob1: Color(hex: 0xB9D4FF),
+            blob2: Color(hex: 0xF4C8E8),
+            blob3: Color(hex: 0xFFD9B3),
+            blob4: Color(hex: 0xC5E9D9),
+            base1: Color(hex: 0xEEF0F6),
+            base2: Color(hex: 0xF5EEE6)
+        )
     )
 
-    static let graphite = ThemeColors(
+    static let dark = ThemeColors(
         paper:       Color(hex: 0x1A1B1C),
-        surface:     Color(hex: 0x232426),
-        surfaceDeep: Color(hex: 0x1E1F21),
-        sidebar:     Color(hex: 0x17181A),
+        surface:     Color(hex: 0x282A30).opacity(0.50),
+        surfaceDeep: Color(hex: 0x282A30).opacity(0.30),
+        sidebar:     Color(hex: 0x1C1E22).opacity(0.55),
         ink:         Color(hex: 0xF0EBE2),
-        accent:      Color(hex: 0xD4714A),
-        accentStrong: Color(hex: 0xB5532E),
-        good:        Color(hex: 0x5E9A6C),
-        goodStrong:  Color(hex: 0x4A8058),
-        critical:    Color(hex: 0xE05040),
-        warning:     Color(hex: 0xD4AA3B)
+        accent:      Color(hex: 0x5B9DF8),
+        accentStrong: Color(hex: 0x3B7DE0),
+        good:        Color(hex: 0x4ABF8E),
+        goodStrong:  Color(hex: 0x2E9A70),
+        critical:    Color(hex: 0xFF5540),
+        warning:     Color(hex: 0xF59E0B),
+        aurora: AuroraColors(
+            blob1: Color(hex: 0x16365E),
+            blob2: Color(hex: 0x4A1F44),
+            blob3: Color(hex: 0x5E3A1D),
+            blob4: Color(hex: 0x1F4A3A),
+            base1: Color(hex: 0x13141A),
+            base2: Color(hex: 0x1A1410)
+        )
     )
 }
 
 // MARK: - Environment Key
 
 private struct ThemeColorsKey: EnvironmentKey {
-    static let defaultValue = ThemeColors.paper
+    static let defaultValue = ThemeColors.light
 }
 
 extension EnvironmentValues {

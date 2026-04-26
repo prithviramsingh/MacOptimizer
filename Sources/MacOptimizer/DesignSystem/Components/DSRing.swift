@@ -42,21 +42,21 @@ struct DSRing: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.spring(response: 0.6, dampingFraction: 0.8), value: fraction)
 
-            // Center label
+            // Center label — serif hero numeric
             VStack(spacing: 0) {
                 HStack(alignment: .firstTextBaseline, spacing: 1) {
                     Text(String(Int(value.rounded())))
                         .font(.system(size: size * 0.30, weight: .regular, design: .serif))
                     Text("%")
                         .font(.system(size: size * 0.13, weight: .regular, design: .serif))
-                        .opacity(0.6)
+                        .opacity(0.5)
                 }
                 if let label {
                     Text(label)
                         .font(AppFont.eyebrowUI)
                         .tracking(0.8)
                         .textCase(.uppercase)
-                        .opacity(0.5)
+                        .opacity(0.45)
                         .padding(.top, 1)
                 }
                 if let sub {

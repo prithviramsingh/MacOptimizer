@@ -157,7 +157,8 @@ class KnowledgeBase: ObservableObject {
                         detail:      tip,
                         severity:    process.cpuPercent > 60 ? .critical : .warning,
                         category:    .process,
-                        actionLabel: knowledge.safeToKill ? "Kill Process" : nil
+                        actionLabel: knowledge.safeToKill ? "Kill Process" : nil,
+                        processName: process.name
                     ))
                 }
                 if process.memoryMB > 400, let tip = knowledge.highMemSuggestion {
@@ -166,7 +167,8 @@ class KnowledgeBase: ObservableObject {
                         detail:      tip,
                         severity:    process.memoryMB > 1200 ? .critical : .warning,
                         category:    .memory,
-                        actionLabel: nil
+                        actionLabel: nil,
+                        processName: process.name
                     ))
                 }
             } else if process.cpuPercent > 50 {
@@ -175,7 +177,8 @@ class KnowledgeBase: ObservableObject {
                     detail:      "This unrecognised process is consuming significant CPU. Investigate it in Activity Monitor (⌘Space → Activity Monitor).",
                     severity:    .warning,
                     category:    .process,
-                    actionLabel: nil
+                    actionLabel: nil,
+                    processName: process.name
                 ))
             }
         }
@@ -190,7 +193,8 @@ class KnowledgeBase: ObservableObject {
                     detail:      "This process has sustained high CPU for ~\(max(1, minutes)) minute(s). Consider restarting its parent application.",
                     severity:    .info,
                     category:    .process,
-                    actionLabel: nil
+                    actionLabel: nil,
+                    processName: name
                 ))
             }
         }

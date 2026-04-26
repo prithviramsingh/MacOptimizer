@@ -126,9 +126,9 @@ struct SidebarView: View {
                 themeManager.toggle()
             } label: {
                 HStack(spacing: DS.Space.sm) {
-                    Image(systemName: themeManager.currentTheme == .paper ? "moon.fill" : "sun.max.fill")
+                    Image(systemName: themeManager.currentTheme == .light ? "moon.fill" : "sun.max.fill")
                         .font(.system(size: 11))
-                    Text(themeManager.currentTheme == .paper ? "Dark mode" : "Light mode")
+                    Text(themeManager.currentTheme == .light ? "Dark mode" : "Light mode")
                         .font(AppFont.captionUI)
                 }
                 .foregroundStyle(colors.ink50)

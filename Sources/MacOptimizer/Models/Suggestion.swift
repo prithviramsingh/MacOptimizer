@@ -1,12 +1,13 @@
 import Foundation
 
-struct Suggestion: Identifiable {
+struct Suggestion: Identifiable, Equatable {
     let id = UUID()
     let title: String
     let detail: String
     let severity: Severity
     let category: Category
     let actionLabel: String?
+    let processName: String?
 
     enum Severity: String {
         case critical = "Critical"

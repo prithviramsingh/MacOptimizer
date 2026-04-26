@@ -6,13 +6,16 @@ struct DashboardView: View {
     @EnvironmentObject private var systemCleaner: SystemCleaner
     @EnvironmentObject private var knowledgeBase: KnowledgeBase
 
+    @Binding var selectedItem: NavItem
+    @Binding var jumpToProcess: ProcessSnapshot?
+    @Binding var jumpToSuggestion: Suggestion?
+
     @State private var cpuHistory: [Double] = Array(repeating: 0, count: 40)
 
     // MARK: - Derived state
 
-    private var totalCPU: Double {
-        processMonitor.processes.reduce(0) { $0 + $1.cpuPercent }
-    }
+    // System CPU% from top's header line (user+sys), matches what top/htop show
+    private var totalCPU: Double { processMonitor.systemCPUPercent }
 
     private var criticalCount: Int {
         knowledgeBase.suggestions.filter { $0.severity == .critical }.count
@@ -21,14 +24,10 @@ struct DashboardView: View {
         knowledgeBase.suggestions.filter { $0.severity == .warning }.count
     }
 
-    private var healthHeadline: (String, String, Color) {
-        if criticalCount > 0 {
-            return ("Your Mac is ", "overworked right now", colors.critical)
-        } else if warningCount > 1 {
-            return ("Your Mac is ", "feeling the heat", colors.warning)
-        } else {
-            return ("Your Mac is ", "running clean", colors.good)
-        }
+    private var healthEmphasis: (String, Color) {
+        if criticalCount > 0 { return ("overworked right now", colors.critical) }
+        if warningCount > 1  { return ("feeling the heat",     colors.warning)  }
+        return ("running clean", colors.goodStrong)
     }
 
     private var healthChip: (String, ChipTone) {
@@ -52,14 +51,7 @@ struct DashboardView: View {
                         cpuCard
                     }
                     DSCard(padding: DS.Space.lg) {
-                        DSVitalCard(
-                            eyebrow: "Memory",
-                            hero: String(format: "%.1f", processMonitor.usedRAM),
-                            unit: "GB",
-                            barValue: processMonitor.ramUsedPct,
-                            barMax: 100,
-                            footer: String(format: "of %.0f GB total", processMonitor.totalRAM)
-                        )
+                        memoryCard
                     }
                     DSCard(padding: DS.Space.lg) {
                         DSVitalCard(
@@ -85,8 +77,8 @@ struct DashboardView: View {
             }
             .padding(DS.Space.xl)
         }
-        .background(colors.paper)
-        .onChange(of: processMonitor.processes) { _ in
+        .background(Color.clear)
+        .onChange(of: processMonitor.systemCPUPercent) { _ in
             var h = cpuHistory
             h.append(totalCPU)
             if h.count > 40 { h.removeFirst() }
@@ -116,20 +108,69 @@ struct DashboardView: View {
                 DSChip(healthChip.0, tone: healthChip.1)
             }
 
-            // Headline
-            HStack(alignment: .firstTextBaseline, spacing: 3) {
-                Text(healthHeadline.0)
-                    .font(.system(size: 28, weight: .regular, design: .serif))
+            // Serif hero headline
+            HStack(alignment: .firstTextBaseline, spacing: 0) {
+                Text("Your Mac is ")
+                    .font(.system(size: 34, weight: .regular, design: .serif))
                     .foregroundStyle(colors.ink)
-                Text(healthHeadline.1)
-                    .font(.system(size: 28, weight: .regular, design: .serif))
+                Text(healthEmphasis.0)
+                    .font(.system(size: 34, weight: .regular, design: .serif))
                     .italic()
-                    .foregroundStyle(healthHeadline.2)
+                    .foregroundStyle(healthEmphasis.1)
             }
 
             Text("\(processMonitor.processes.count) processes · \(processMonitor.resourceHogs.count) hogs · \(knowledgeBase.suggestions.count) suggestions")
                 .font(AppFont.monoCaption)
                 .foregroundStyle(colors.ink40)
+        }
+    }
+
+    // MARK: - Memory Card
+
+    private var memoryCard: some View {
+        VStack(alignment: .leading, spacing: DS.Space.sm) {
+            DSEyebrow("Memory")
+
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text(String(format: "%.1f", processMonitor.usedRAM))
+                    .font(.system(size: 40, weight: .regular, design: .serif))
+                    .foregroundStyle(colors.ink)
+                Text(String(format: "GB / %.0f GB", processMonitor.totalRAM))
+                    .font(AppFont.monoCaption)
+                    .foregroundStyle(colors.ink50)
+            }
+
+            DSBar(value: processMonitor.ramUsedPct, maxValue: 100, height: 4)
+
+            // Swap row
+            if processMonitor.swapTotalGB > 0 {
+                HStack(spacing: DS.Space.xs) {
+                    Text("Swap")
+                        .font(AppFont.captionUI)
+                        .foregroundStyle(colors.ink40)
+                    Text(String(format: "%.1f / %.1f GB", processMonitor.swapUsedGB, processMonitor.swapTotalGB))
+                        .font(AppFont.monoCaption)
+                        .foregroundStyle(
+                            processMonitor.swapUsedGB > 1 ? colors.warning : colors.ink50
+                        )
+                    Spacer()
+                    if processMonitor.swapUsedGB > 0 {
+                        DSBar(
+                            value: processMonitor.swapUsedGB,
+                            maxValue: max(processMonitor.swapTotalGB, 0.1),
+                            height: 3,
+                            hue: processMonitor.swapUsedGB > 1 ? colors.warning : colors.ink30
+                        )
+                        .frame(width: 60)
+                    }
+                }
+                .padding(.top, 2)
+            } else {
+                Text("No swap in use")
+                    .font(AppFont.captionUI)
+                    .foregroundStyle(colors.ink30)
+                    .padding(.top, 2)
+            }
         }
     }
 
@@ -150,10 +191,10 @@ struct DashboardView: View {
 
                     if let topProc = processMonitor.processes.first {
                         HStack {
-                            Text("peak")
+                            Text("peak proc")
                                 .font(AppFont.monoCaption)
                                 .foregroundStyle(colors.ink40)
-                            Text(String(format: "%.1f%%", topProc.cpuPercent))
+                            Text(String(format: "%.1f%% /core", topProc.cpuPercent))
                                 .font(AppFont.monoCaption)
                                 .foregroundStyle(colors.ink70)
                         }
@@ -179,7 +220,7 @@ struct DashboardView: View {
             DSEyebrow("System")
 
             VStack(alignment: .leading, spacing: DS.Space.sm) {
-                miniStat(icon: "thermometer.medium", label: "Thermal", value: "Normal")
+                thermalMiniStat
                 miniStat(
                     icon: "battery.75percent",
                     label: "Uptime",
@@ -194,6 +235,32 @@ struct DashboardView: View {
                     miniStat(icon: "desktopcomputer", label: "Host", value: processMonitor.hostname)
                 }
             }
+        }
+    }
+
+    private var thermalMiniStat: some View {
+        let state = ProcessInfo.processInfo.thermalState
+        let label: String
+        let color: Color
+        switch state {
+        case .nominal:  label = "Normal";   color = colors.ink70
+        case .fair:     label = "Fair";     color = colors.warning
+        case .serious:  label = "Serious";  color = colors.warning
+        case .critical: label = "Critical"; color = colors.critical
+        @unknown default: label = "Normal"; color = colors.ink70
+        }
+        return HStack(spacing: DS.Space.sm) {
+            Image(systemName: "thermometer.medium")
+                .font(.system(size: 11))
+                .foregroundStyle(colors.ink40)
+                .frame(width: 14)
+            Text("Thermal")
+                .font(AppFont.captionUI)
+                .foregroundStyle(colors.ink50)
+            Spacer()
+            Text(label)
+                .font(AppFont.monoCaption)
+                .foregroundStyle(color)
         }
     }
 
@@ -250,6 +317,17 @@ struct DashboardView: View {
     }
 
     private func consumerRow(rank: Int, process: ProcessSnapshot) -> some View {
+        consumerRowContent(rank: rank, process: process)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                jumpToProcess = process
+                withAnimation(.spring(response: 0.38, dampingFraction: 0.88)) {
+                    selectedItem = .processes
+                }
+            }
+    }
+
+    private func consumerRowContent(rank: Int, process: ProcessSnapshot) -> some View {
         HStack(spacing: DS.Space.sm) {
             Text("\(rank)")
                 .font(AppFont.monoCaption)
@@ -272,7 +350,7 @@ struct DashboardView: View {
                 .drawingGroup()
 
             Text(String(format: "%.1f%%", process.cpuPercent))
-                .font(.system(size: 14, weight: .regular, design: .serif))
+                .font(.system(size: 14, weight: .semibold))
                 .foregroundStyle(process.cpuPercent > 20 ? colors.accent : colors.ink70)
                 .frame(width: 46, alignment: .trailing)
         }
@@ -305,7 +383,7 @@ struct DashboardView: View {
                                 .font(.system(size: 28))
                                 .foregroundStyle(colors.good)
                             Text("All clear")
-                                .font(.system(size: 18, weight: .regular, design: .serif))
+                                .font(.system(size: 18, weight: .medium))
                                 .foregroundStyle(colors.ink)
                         }
                         .padding(DS.Space.xl)
@@ -351,5 +429,20 @@ struct DashboardView: View {
         }
         .padding(.horizontal, DS.Space.lg)
         .padding(.vertical, DS.Space.sm + 1)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if let name = suggestion.processName,
+               let proc = processMonitor.processes.first(where: { $0.name == name }) {
+                jumpToProcess = proc
+                withAnimation(.spring(response: 0.38, dampingFraction: 0.88)) {
+                    selectedItem = .processes
+                }
+            } else {
+                jumpToSuggestion = suggestion
+                withAnimation(.spring(response: 0.38, dampingFraction: 0.88)) {
+                    selectedItem = .suggestions
+                }
+            }
+        }
     }
 }

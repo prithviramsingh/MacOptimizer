@@ -45,7 +45,7 @@ struct CleanupView: View {
             }
             .padding(DS.Space.xl)
         }
-        .background(colors.paper)
+        .background(Color.clear)
         .alert("Clean Now?", isPresented: $showConfirm) {
             Button("Cancel", role: .cancel) {}
             Button("Clean", role: .destructive) { Task { await cleaner.clean() } }
@@ -65,11 +65,11 @@ struct CleanupView: View {
 
             HStack(alignment: .firstTextBaseline, spacing: 3) {
                 Text(headline.0)
-                    .font(.system(size: 26, weight: .regular, design: .serif))
+                    .font(.system(size: 26, weight: .semibold))
                     .foregroundStyle(colors.ink)
                     .italic(phase == .scanned || phase == .done)
                 Text(headline.1)
-                    .font(.system(size: 26, weight: .regular, design: .serif))
+                    .font(.system(size: 26, weight: .semibold))
                     .foregroundStyle(phase == .scanned || phase == .done ? colors.accent : colors.ink)
             }
 
@@ -134,9 +134,9 @@ struct CleanupView: View {
                     DSEyebrow(phase == .done ? "Total Reclaimed" : "Ready to Clean")
                     HStack(alignment: .firstTextBaseline, spacing: 4) {
                         Text(fmtBytesHero(phase == .done ? cleaner.cleanedBytes : cleaner.selectedSize))
-                            .font(.system(size: 56, weight: .regular, design: .serif))
+                            .font(.system(size: 56, weight: .semibold))
                         Text(fmtBytesUnit(phase == .done ? cleaner.cleanedBytes : cleaner.selectedSize))
-                            .font(.system(size: 20, weight: .regular, design: .serif))
+                            .font(.system(size: 20, weight: .semibold))
                             .opacity(0.6)
                     }
                 }
@@ -251,7 +251,7 @@ struct CleanupView: View {
 
             // Size
             Text(item.wrappedValue.formattedSize)
-                .font(.system(size: 15, weight: .regular, design: .serif))
+                .font(.system(size: 15, weight: .regular))
                 .foregroundStyle(colors.ink70)
         }
         .padding(.horizontal, DS.Space.lg)
@@ -264,7 +264,7 @@ struct CleanupView: View {
         VStack(alignment: .leading, spacing: DS.Space.md) {
             HStack {
                 Text("Cleanup Log")
-                    .font(.system(size: 18, weight: .regular, design: .serif))
+                    .font(.system(size: 18, weight: .semibold))
                 Spacer()
                 Button("Done") { showLog = false }
                     .buttonStyle(.borderedProminent)

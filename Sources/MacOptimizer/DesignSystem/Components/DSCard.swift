@@ -21,25 +21,38 @@ struct DSCard<Content: View>: View {
         self.content = content
     }
 
-    private var bg: Color { inverted ? colors.ink : colors.surface }
-    private var fg: Color { inverted ? colors.paper : colors.ink }
-    private var border: Color { inverted ? colors.paper.opacity(0.10) : colors.ink8 }
-
     var body: some View {
         content()
             .padding(padding)
-            .background(bg)
-            .foregroundStyle(fg)
+            .background {
+                if inverted {
+                    RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
+                        .fill(colors.ink)
+                } else {
+                    RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
+                                .fill(Color.white.opacity(0.30))
+                        )
+                }
+            }
+            .foregroundStyle(inverted ? colors.paper : colors.ink)
             .clipShape(RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: DS.Radius.card, style: .continuous)
-                    .strokeBorder(border, lineWidth: 1)
+                    .strokeBorder(
+                        inverted ? Color.white.opacity(0.08) : Color.white.opacity(0.65),
+                        lineWidth: 0.5
+                    )
             )
             .shadow(
-                color: .black.opacity(hoverable && isHovered ? 0.08 : 0),
-                radius: 12, x: 0, y: 4
+                color: .black.opacity(hoverable && isHovered ? 0.14 : 0.07),
+                radius: hoverable && isHovered ? 18 : 10,
+                x: 0, y: hoverable && isHovered ? 6 : 3
             )
+            .scaleEffect(hoverable && isHovered ? 1.004 : 1)
             .onHover { isHovered = $0 }
-            .animation(.easeInOut(duration: 0.16), value: isHovered)
+            .animation(.easeInOut(duration: 0.18), value: isHovered)
     }
 }
