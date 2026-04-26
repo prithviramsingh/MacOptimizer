@@ -67,7 +67,12 @@ Don't just see a problem—solve it. MacOptimizer analyzes your system and gener
 
 ## 💾 Installation
 
-### The Easy Way (Recommended)
+### Homebrew (Recommended)
+```bash
+brew install prithviramsingh/tap/macoptimizer
+```
+
+### Direct Download
 1. Go to the [**Releases Page**](https://github.com/prithviramsingh/MacOptimizer/releases).
 2. Download the latest `MacOptimizer.dmg`.
 3. Drag **MacOptimizer** to your Applications folder.
