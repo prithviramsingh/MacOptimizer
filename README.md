@@ -55,9 +55,13 @@ Don't just see a problem—solve it. MacOptimizer analyzes your system and gener
 
 ## 📸 Screenshots
 
-| Dashboard (Paper Theme) | Process Detail (Graphite) |
+| Dashboard | Processes | Cleanup |
+| :---: | :---: | :---: |
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Processes](docs/screenshots/processes.png) | ![Cleanup](docs/screenshots/cleanup.png) |
+
+| Startup Items | Suggestions |
 | :---: | :---: |
-| ![Dashboard View](screenshot.png) | *Native dark mode support included* |
+| ![Startup Items](docs/screenshots/startup.png) | ![Suggestions](docs/screenshots/suggestions.png) |
 
 ---
 
