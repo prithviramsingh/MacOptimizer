@@ -207,6 +207,7 @@ function Sidebar({ state, dispatch }) {
 
       {/* footer status */}
       <div style={{padding:'14px 18px 18px', borderTop:'1px solid var(--ink-8)', fontFamily:'var(--font-mono)'}}>
+        <div style={{fontSize:9.5, color:'var(--ink-40)', fontWeight:500, marginBottom:10}}>v1.0.1</div>
         <MiniVital label="MEM" value={`${mac.usedRamGB.toFixed(1)}/${mac.totalRamGB}G`} pct={memPct}/>
         <div style={{height:10}}/>
         <MiniVital label="SSD" value={`${mac.usedDiskGB}/${mac.totalDiskGB}G`} pct={diskPct}/>
