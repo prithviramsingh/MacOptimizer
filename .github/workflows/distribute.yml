@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: macos-14
+    permissions:
+      contents: write
     
     steps:
     - uses: actions/checkout@v4
@@ -19,29 +21,36 @@ jobs:
       with:
         swift-version: "5.9"
 
-    - name: Verify Signing Secrets
-      if: startsWith(github.ref, 'refs/tags/v')
+    - name: Check for Signing Secrets
+      id: check_secrets
       run: |
-        MISSING_SECRETS=()
-        if [ -z "${{ secrets.MACOS_CERTIFICATE }}" ]; then MISSING_SECRETS+=("MACOS_CERTIFICATE"); fi
-        if [ -z "${{ secrets.MACOS_CERTIFICATE_PWD }}" ]; then MISSING_SECRETS+=("MACOS_CERTIFICATE_PWD"); fi
-        if [ -z "${{ secrets.APPLE_ID }}" ]; then MISSING_SECRETS+=("APPLE_ID"); fi
-        if [ -z "${{ secrets.TEAM_ID }}" ]; then MISSING_SECRETS+=("TEAM_ID"); fi
-        if [ -z "${{ secrets.APP_PASSWORD }}" ]; then MISSING_SECRETS+=("APP_PASSWORD"); fi
-        
-        if [ ${#MISSING_SECRETS[@]} -ne 0 ]; then
-          echo "::error::The following secrets are missing: ${MISSING_SECRETS[*]}"
-          echo "These are required for code signing and notarization on tagged releases."
-          exit 1
+        if [ -n "${{ secrets.MACOS_CERTIFICATE }}" ] && \
+           [ -n "${{ secrets.MACOS_CERTIFICATE_PWD }}" ] && \
+           [ -n "${{ secrets.APPLE_ID }}" ] && \
+           [ -n "${{ secrets.TEAM_ID }}" ] && \
+           [ -n "${{ secrets.APP_PASSWORD }}" ]; then
+          echo "HAS_SECRETS=true" >> $GITHUB_ENV
+          echo "Signing secrets found."
+        else
+          echo "HAS_SECRETS=false" >> $GITHUB_ENV
+          echo "Signing secrets missing. Build will proceed without signing."
+        fi
+
+    - name: Extract Version
+      run: |
+        if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        else
+          echo "VERSION=1.0.4" >> $GITHUB_ENV
         fi
 
     - name: Import Apple Certificates
-      if: startsWith(github.ref, 'refs/tags/v')
+      if: env.HAS_SECRETS == 'true' && startsWith(github.ref, 'refs/tags/v')
       uses: apple-actions/import-codesign-certs@v3
       with:
         p12-file-base64: ${{ secrets.MACOS_CERTIFICATE }}
         p12-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
-        keychain-password: ${{ secrets.MACOS_CERTIFICATE_PWD }} # Reusing cert pwd for simplicity or use a random string
+        keychain-password: ${{ secrets.MACOS_CERTIFICATE_PWD }}
 
     - name: Build Release
       run: swift build -c release
@@ -50,7 +59,6 @@ jobs:
       run: |
         APP_NAME="MacOptimizer"
         BUNDLE_ID="com.prithvibondili.macoptimizer"
-        VERSION="1.0.4"
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
         BINARY=".build/release/$APP_NAME"
@@ -75,7 +83,7 @@ jobs:
             <key>CFBundlePackageType</key>
             <string>APPL</string>
             <key>CFBundleShortVersionString</key>
-            <string>$VERSION</string>
+            <string>${{ env.VERSION }}</string>
             <key>CFBundleVersion</key>
             <string>${{ github.run_number }}</string>
             <key>LSMinimumSystemVersion</key>
@@ -91,7 +99,7 @@ jobs:
         PLIST
 
     - name: Code Sign and Notarize
-      if: startsWith(github.ref, 'refs/tags/v')
+      if: env.HAS_SECRETS == 'true' && startsWith(github.ref, 'refs/tags/v')
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         TEAM_ID: ${{ secrets.TEAM_ID }}
@@ -118,10 +126,9 @@ jobs:
     - name: Create DMG
       run: |
         APP_NAME="MacOptimizer"
-        VERSION="1.0.4"
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
-        DMG_NAME="$APP_NAME-$VERSION.dmg"
+        DMG_NAME="$APP_NAME-${{ env.VERSION }}.dmg"
         
         # Staging for DMG
         mkdir -p .build/dmg_staging
@@ -130,7 +137,7 @@ jobs:
         
         hdiutil create -volname "$APP_NAME" -srcfolder .build/dmg_staging -ov -format UDZO ".build/$DMG_NAME"
         
-        if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+        if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
           echo "Signing DMG..."
           codesign --force --sign "Developer ID Application" --timestamp ".build/$DMG_NAME"
         fi
@@ -149,5 +156,6 @@ jobs:
       with:
         files: ${{ env.DMG_PATH }}
         generate_release_notes: true
+        fail_on_unmatched_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
