@@ -26,7 +26,7 @@ jobs:
       run: |
         APP_NAME="MacOptimizer"
         BUNDLE_ID="com.prithvibondili.macoptimizer"
-        VERSION="1.0.0"
+        VERSION="1.0.1"
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
         BINARY=".build/release/$APP_NAME"

@@ -3,7 +3,7 @@ const { useState: useStateV1, useEffect: useEffectV1, useMemo: useMemoV1, useRef
 
 // ─── Dashboard ──────────────────────────────────────────
 function DashboardView({ state, dispatch }) {
-  const tick = useLivePulse(1000);
+  const tick = useLivePulse(2000);
   const procs = state.processes;
 
   // animated aggregate CPU — jittered around a target
@@ -43,7 +43,7 @@ function DashboardView({ state, dispatch }) {
             <span style={{width:6, height:6, borderRadius:'50%', background: health==='good'?'var(--good)':health==='warn'?'oklch(70% 0.14 75)':'oklch(55% 0.18 28)',
               boxShadow:`0 0 0 4px ${health==='good'?'var(--good-10)':'oklch(70% 0.14 75 / 0.2)'}`,
               animation:'pulse 1.6s ease-in-out infinite'}}/>
-            Live · {new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · Polling every 5s
+            Live · {new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})} · Polling every 2s
           </span>
           <Chip tone={healthTone}>
             <Icon name={health==='good'?'check':health==='warn'?'warning':'critical'} size={11}/>
@@ -245,7 +245,7 @@ function MiniStat({ icon, label, value, tone }) {
 
 // ─── Processes ──────────────────────────────────────────
 function ProcessesView({ state, dispatch }) {
-  const tick = useLivePulse(1500);
+  const tick = useLivePulse(2000);
   const [sort, setSort] = useState({ key: 'cpu', dir: -1 });
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | hogs | user | system
