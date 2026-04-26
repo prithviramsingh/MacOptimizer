@@ -114,9 +114,11 @@ jobs:
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
         ENTITLEMENTS="MacOptimizer.entitlements"
+        # Use Fingerprint ID if provided, fallback to generic name
+        SIGNING_IDENTITY="${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}"
         
-        echo "Signing App Bundle..."
-        codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" --sign "Developer ID Application" --timestamp "$APP_BUNDLE"
+        echo "Signing App Bundle with $SIGNING_IDENTITY..."
+        codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" --sign "$SIGNING_IDENTITY" --timestamp "$APP_BUNDLE"
         
         echo "Creating Archive for Notarization..."
         ZIP_PATH="$BUILD_DIR/$APP_NAME.zip"
@@ -143,8 +145,8 @@ jobs:
         hdiutil create -volname "$APP_NAME" -srcfolder .build/dmg_staging -ov -format UDZO ".build/$DMG_NAME"
         
         if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-          echo "Signing DMG..."
-          codesign --force --sign "Developer ID Application" --timestamp ".build/$DMG_NAME"
+          echo "Signing DMG with ${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}..."
+          codesign --force --sign "${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}" --timestamp ".build/$DMG_NAME"
         fi
         
         echo "DMG_PATH=.build/$DMG_NAME" >> $GITHUB_ENV
