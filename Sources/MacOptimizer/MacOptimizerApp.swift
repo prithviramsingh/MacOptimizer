@@ -24,8 +24,13 @@ private func makeAppIcon() -> NSImage {
     }
 }
 
+private final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+}
+
 @main
 struct MacOptimizerApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var processMonitor = ProcessMonitor()
     @StateObject private var systemCleaner  = SystemCleaner()
     @StateObject private var startupService = StartupItemsService()
