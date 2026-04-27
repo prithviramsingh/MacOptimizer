@@ -122,12 +122,18 @@ jobs:
         ENTITLEMENTS="MacOptimizer.entitlements"
         KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
         
-        # Use Fingerprint ID if provided, fallback to generic name
-        SIGNING_IDENTITY="${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}"
+        # Extract the actual signing identity from the keychain
+        SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | awk -F'[()]' '{print $(NF-1)}')
         
-        echo "Signing App Bundle with $SIGNING_IDENTITY using keychain $KEYCHAIN_PATH..."
+        if [ -z "$SIGNING_IDENTITY" ]; then
+          echo "ERROR: No valid signing identity found in keychain"
+          security find-identity -v -p codesigning "$KEYCHAIN_PATH"
+          exit 1
+        fi
         
-        # Explicitly use the keychain path to avoid 'not found' errors
+        echo "Found signing identity: $SIGNING_IDENTITY"
+        
+        echo "Signing App Bundle..."
         codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" \
           --sign "$SIGNING_IDENTITY" \
           --keychain "$KEYCHAIN_PATH" \
@@ -159,9 +165,14 @@ jobs:
         
         if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
           KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
-          SIGNING_IDENTITY="${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}"
-          echo "Signing DMG with $SIGNING_IDENTITY..."
-          codesign --force --sign "$SIGNING_IDENTITY" --keychain "$KEYCHAIN_PATH" --timestamp ".build/$DMG_NAME"
+          SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | awk -F'[()]' '{print $(NF-1)}')
+          
+          if [ -n "$SIGNING_IDENTITY" ]; then
+            echo "Signing DMG with $SIGNING_IDENTITY..."
+            codesign --force --sign "$SIGNING_IDENTITY" --keychain "$KEYCHAIN_PATH" --timestamp ".build/$DMG_NAME"
+          else
+            echo "WARNING: Could not find signing identity for DMG, skipping DMG signing"
+          fi
         fi
         
         echo "DMG_PATH=.build/$DMG_NAME" >> $GITHUB_ENV
