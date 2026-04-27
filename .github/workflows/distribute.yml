@@ -120,23 +120,21 @@ jobs:
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
         ENTITLEMENTS="MacOptimizer.entitlements"
-        KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
-        
-        # Extract the actual signing identity from the keychain
-        SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
-        
+
+        # Search all keychains (import-codesign-certs adds its keychain to the search list)
+        SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
+
         if [ -z "$SIGNING_IDENTITY" ]; then
-          echo "ERROR: No valid signing identity found in keychain"
-          security find-identity -v -p codesigning "$KEYCHAIN_PATH"
+          echo "ERROR: No valid signing identity found"
+          security find-identity -v -p codesigning
           exit 1
         fi
-        
+
         echo "Found signing identity: $SIGNING_IDENTITY"
-        
+
         echo "Signing App Bundle..."
         codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" \
           --sign "$SIGNING_IDENTITY" \
-          --keychain "$KEYCHAIN_PATH" \
           --timestamp "$APP_BUNDLE"
         
         echo "Creating Archive for Notarization..."
@@ -164,12 +162,11 @@ jobs:
         hdiutil create -volname "$APP_NAME" -srcfolder .build/dmg_staging -ov -format UDZO ".build/$DMG_NAME"
         
         if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-          KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
-          SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
-          
+          SIGNING_IDENTITY=$(security find-identity -v -p codesigning | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
+
           if [ -n "$SIGNING_IDENTITY" ]; then
             echo "Signing DMG with $SIGNING_IDENTITY..."
-            codesign --force --sign "$SIGNING_IDENTITY" --keychain "$KEYCHAIN_PATH" --timestamp ".build/$DMG_NAME"
+            codesign --force --sign "$SIGNING_IDENTITY" --timestamp ".build/$DMG_NAME"
           else
             echo "WARNING: Could not find signing identity for DMG, skipping DMG signing"
           fi
