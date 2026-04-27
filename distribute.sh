@@ -22,7 +22,8 @@ cd "$(dirname "$0")"
 # ── Config ────────────────────────────────────────────────────────
 BUNDLE_ID="com.prithvibondili.macoptimizer"
 APP_NAME="MacOptimizer"
-VERSION="1.0.4"
+# Fallback version, but usually you want this to match your tag
+VERSION="${VERSION:-1.0.4}"
 TEAM_ID="${TEAM_ID:-5YCN5GF5G9}"
 APPLE_ID="${APPLE_ID:-}"
 APP_PASSWORD="${APP_PASSWORD:-}"

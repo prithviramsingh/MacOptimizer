@@ -123,7 +123,7 @@ jobs:
         KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
         
         # Extract the actual signing identity from the keychain
-        SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | awk -F'[()]' '{print $(NF-1)}')
+        SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
         
         if [ -z "$SIGNING_IDENTITY" ]; then
           echo "ERROR: No valid signing identity found in keychain"
@@ -165,7 +165,7 @@ jobs:
         
         if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
           KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
-          SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | awk -F'[()]' '{print $(NF-1)}')
+          SIGNING_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep "Developer ID Application" | head -n 1 | sed 's/.*"\(.*\)".*/\1/')
           
           if [ -n "$SIGNING_IDENTITY" ]; then
             echo "Signing DMG with $SIGNING_IDENTITY..."
