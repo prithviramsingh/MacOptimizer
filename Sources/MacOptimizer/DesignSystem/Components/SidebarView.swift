@@ -134,6 +134,7 @@ struct SidebarView: View {
                 .foregroundStyle(colors.ink50)
             }
             .buttonStyle(.plain)
+
         }
         .padding(.horizontal, DS.Space.lg)
         .padding(.vertical, DS.Space.md)

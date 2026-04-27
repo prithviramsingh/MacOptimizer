@@ -228,6 +228,26 @@ struct ContentView: View {
             Spacer()
 
             Button {
+                if let url = URL(string: "https://www.paypal.com/donate/?business=8AMLT3UTQ4KEE&no_recurring=0&currency_code=USD") {
+                    NSWorkspace.shared.open(url)
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 9))
+                        .foregroundStyle(Color.pink.opacity(0.7))
+                    Text("Support this App")
+                        .font(.system(size: 11))
+                        .foregroundStyle(colors.ink40)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .background(colors.ink.opacity(0.05))
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
+
+            Button {
                 withAnimation(.easeInOut(duration: 0.2)) {
                     themeManager.toggle()
                 }

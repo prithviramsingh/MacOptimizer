@@ -74,6 +74,7 @@ struct DashboardView: View {
                     topConsumersCard
                     attentionCard
                 }
+
             }
             .padding(DS.Space.xl)
         }
