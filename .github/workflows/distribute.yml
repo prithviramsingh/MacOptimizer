@@ -120,15 +120,18 @@ jobs:
         BUILD_DIR=".build/distribution"
         APP_BUNDLE="$BUILD_DIR/$APP_NAME.app"
         ENTITLEMENTS="MacOptimizer.entitlements"
+        KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
         
         # Use Fingerprint ID if provided, fallback to generic name
         SIGNING_IDENTITY="${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}"
         
-        echo "Signing App Bundle with $SIGNING_IDENTITY..."
+        echo "Signing App Bundle with $SIGNING_IDENTITY using keychain $KEYCHAIN_PATH..."
         
-        # Explicitly unlock and use search list if needed
-        # codesign should pick it up from the imported keychain automatically
-        codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" --sign "$SIGNING_IDENTITY" --timestamp "$APP_BUNDLE"
+        # Explicitly use the keychain path to avoid 'not found' errors
+        codesign --force --deep --options runtime --entitlements "$ENTITLEMENTS" \
+          --sign "$SIGNING_IDENTITY" \
+          --keychain "$KEYCHAIN_PATH" \
+          --timestamp "$APP_BUNDLE"
         
         echo "Creating Archive for Notarization..."
         ZIP_PATH="$BUILD_DIR/$APP_NAME.zip"
@@ -155,8 +158,10 @@ jobs:
         hdiutil create -volname "$APP_NAME" -srcfolder .build/dmg_staging -ov -format UDZO ".build/$DMG_NAME"
         
         if [[ "${{ env.HAS_SECRETS }}" == "true" ]] && [[ "${{ github.ref }}" == refs/tags/v* ]]; then
-          echo "Signing DMG with ${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}..."
-          codesign --force --sign "${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}" --timestamp ".build/$DMG_NAME"
+          KEYCHAIN_PATH="/Users/runner/Library/Keychains/signing_temp.keychain-db"
+          SIGNING_IDENTITY="${{ secrets.MACOS_CERTIFICATE_ID || 'Developer ID Application' }}"
+          echo "Signing DMG with $SIGNING_IDENTITY..."
+          codesign --force --sign "$SIGNING_IDENTITY" --keychain "$KEYCHAIN_PATH" --timestamp ".build/$DMG_NAME"
         fi
         
         echo "DMG_PATH=.build/$DMG_NAME" >> $GITHUB_ENV
